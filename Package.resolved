@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "swift-mqtt",
+        "repositoryURL": "https://github.com/matsune/swift-mqtt.git",
+        "state": {
+          "branch": null,
+          "revision": "c0a21bc899bfa5b81f6bf5cd01a4b35d7f43ba70",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "swift-nio",
+        "repositoryURL": "https://github.com/apple/swift-nio.git",
+        "state": {
+          "branch": null,
+          "revision": "addf69cfe60376c325397c8926589415576b1dd1",
+          "version": "2.34.0"
+        }
+      },
+      {
+        "package": "swift-nio-ssl",
+        "repositoryURL": "https://github.com/apple/swift-nio-ssl.git",
+        "state": {
+          "branch": null,
+          "revision": "08e701df9a3b9108c56f1aef5d9ef9a78fda2846",
+          "version": "2.16.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
