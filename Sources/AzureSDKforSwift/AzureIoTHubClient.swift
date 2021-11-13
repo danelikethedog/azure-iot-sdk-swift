@@ -57,19 +57,21 @@ public struct AzureIoTHubClient {
         self.modelId = modelId
         self.clientCertPath = clientCertPath
         self.clientKeyPath = clientKeyPath
+
+        var tlsConfiguration = TLSConfiguration.makeClientConfiguration()
         
-        let tlsConfiguration = try! TLSConfiguration.forClient(minimumTLSVersion: .tlsv11,
-                                                               maximumTLSVersion: .tlsv12,
-                                                               certificateVerification: .noHostnameVerification,
-                                                               trustRoots: NIOSSLTrustRoots.certificates(NIOSSLCertificate.fromPEMFile(baltimoreRoot)),
-                                                               certificateChain: NIOSSLCertificate.fromPEMFile(clientCertPath).map { .certificate($0) },
-                                                               privateKey: .privateKey(.init(file: clientKeyPath, format: .pem)))
+        tlsConfiguration.minimumTLSVersion = .tlsv11
+        tlsConfiguration.maximumTLSVersion = .tlsv12
+        tlsConfiguration.certificateVerification = .noHostnameVerification
+        tlsConfiguration.trustRoots = try! NIOSSLTrustRoots.certificates(NIOSSLCertificate.fromPEMFile(baltimoreRoot))
+        tlsConfiguration.privateKey = try! .privateKey(.init(file: clientKeyPath, format: .pem))
+        tlsConfiguration.certificateChain = try! NIOSSLCertificate.fromPEMFile(clientCertPath).map { .certificate($0) }
 
         mqttClient = MQTTClient(host: hostname,
                                      port: 8883,
                                      cleanSession: true,
                                      keepAlive: 240,
-                                     username: createUsername(),
+                                     username: hostname + "/" + deviceId,
                                      tlsConfiguration: tlsConfiguration
                                      )
     }
